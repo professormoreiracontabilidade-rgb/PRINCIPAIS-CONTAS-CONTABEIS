@@ -142,6 +142,121 @@
       color: #ffd34e;
     }
 
+    /* Apresentação: uma imagem em cada tela */
+    html {
+      scroll-snap-type: y mandatory;
+    }
+
+    header,
+    footer,
+    section h2 {
+      display: none;
+    }
+
+    nav {
+      position: fixed;
+      z-index: 10;
+      top: 50%;
+      right: 18px;
+      display: flex;
+      flex-direction: column;
+      width: auto;
+      margin: 0;
+      padding: 10px;
+      transform: translateY(-50%);
+      border-radius: 999px;
+      background: rgba(8, 46, 84, 0.86);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(5px);
+    }
+
+    nav a {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      place-items: center;
+      border: 2px solid rgba(255, 255, 255, 0.8);
+      color: white;
+      background: transparent;
+      font-size: 16px;
+      box-shadow: none;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      color: #073763;
+      background: #ffd34e;
+      border-color: #ffd34e;
+      outline: none;
+    }
+
+    main {
+      width: 100%;
+      margin: 0;
+    }
+
+    section {
+      display: grid;
+      width: 100%;
+      height: 100vh;
+      min-height: 100vh;
+      margin: 0;
+      padding: 18px 76px 18px 18px;
+      place-items: center;
+      border-radius: 0;
+      background: #eef3f7;
+      box-shadow: none;
+      scroll-margin-top: 0;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+    }
+
+    section:nth-child(even) {
+      background: #e4ebf1;
+    }
+
+    figure {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      place-items: center;
+    }
+
+    img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: calc(100vh - 36px);
+      margin: auto;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 12px 35px rgba(21, 50, 74, 0.16);
+    }
+
+    @media (max-width: 700px) {
+      nav {
+        top: auto;
+        right: 50%;
+        bottom: 10px;
+        flex-direction: row;
+        transform: translateX(50%);
+      }
+
+      nav a {
+        width: 34px;
+        height: 34px;
+      }
+
+      section {
+        padding: 12px 12px 70px;
+      }
+
+      img {
+        max-height: calc(100vh - 82px);
+      }
+    }
+
     @media print {
       body {
         background: white;
@@ -160,6 +275,10 @@
       }
 
       section {
+        display: block;
+        width: 100%;
+        height: auto;
+        min-height: 0;
         margin: 0;
         padding: 0;
         border-radius: 0;
@@ -174,7 +293,11 @@
       }
 
       img {
+        width: 100%;
+        max-width: none;
+        max-height: none;
         border-radius: 0;
+        box-shadow: none;
       }
     }
   </style>
@@ -187,11 +310,11 @@
   </header>
 
   <nav aria-label="Navegação entre as imagens">
-    <a href="#ativo">1. Ativo</a>
-    <a href="#ativo-nao-circulante">2. Ativo Não Circulante</a>
-    <a href="#passivo">3. Passivo</a>
-    <a href="#patrimonio-liquido">4. Patrimônio Líquido</a>
-    <a href="#resultado">5. Receitas e Despesas</a>
+    <a href="#ativo" aria-label="Tela 1: Ativo" title="Ativo">1</a>
+    <a href="#ativo-nao-circulante" aria-label="Tela 2: Ativo Não Circulante" title="Ativo Não Circulante">2</a>
+    <a href="#passivo" aria-label="Tela 3: Passivo" title="Passivo">3</a>
+    <a href="#patrimonio-liquido" aria-label="Tela 4: Patrimônio Líquido" title="Patrimônio Líquido">4</a>
+    <a href="#resultado" aria-label="Tela 5: Receitas e Despesas" title="Receitas e Despesas">5</a>
   </nav>
 
   <main>
@@ -253,5 +376,32 @@
   <footer>
     <strong>Curso de Contabilidade Professor Moreira</strong>
   </footer>
+
+  <script>
+    const telas = [...document.querySelectorAll("main section")];
+
+    function telaAtual() {
+      return telas.reduce((maisProxima, tela, indice) => {
+        const distancia = Math.abs(tela.getBoundingClientRect().top);
+        return distancia < maisProxima.distancia
+          ? { indice, distancia }
+          : maisProxima;
+      }, { indice: 0, distancia: Infinity }).indice;
+    }
+
+    window.addEventListener("keydown", (evento) => {
+      const indice = telaAtual();
+
+      if (["ArrowDown", "PageDown"].includes(evento.key)) {
+        evento.preventDefault();
+        telas[Math.min(indice + 1, telas.length - 1)].scrollIntoView({ behavior: "smooth" });
+      }
+
+      if (["ArrowUp", "PageUp"].includes(evento.key)) {
+        evento.preventDefault();
+        telas[Math.max(indice - 1, 0)].scrollIntoView({ behavior: "smooth" });
+      }
+    });
+  </script>
 </body>
 </html>
