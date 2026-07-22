@@ -257,6 +257,181 @@
       }
     }
 
+    /* Modo Mobile Professor Moreira */
+    body {
+      overflow-x: hidden;
+      background: #06162f;
+    }
+
+    header,
+    nav,
+    footer,
+    section h2 {
+      display: none !important;
+    }
+
+    main {
+      width: min(100%, 540px);
+      margin: 0 auto;
+      background: #06162f;
+      box-shadow: 0 0 45px rgba(0, 0, 0, 0.45);
+    }
+
+    section,
+    section:nth-child(even) {
+      display: grid;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      min-height: 100vh;
+      min-height: 100dvh;
+      padding: 0 !important;
+      place-items: center;
+      background: #06162f;
+    }
+
+    figure {
+      display: grid;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      place-items: center;
+    }
+
+    img,
+    .tela-capa img {
+      display: block;
+      width: auto;
+      max-width: 100%;
+      height: auto;
+      max-height: 100%;
+      margin: auto;
+      object-fit: contain;
+      border-radius: 0;
+      box-shadow: none;
+    }
+
+    /* Telas independentes: somente uma fica visível por vez */
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      scroll-snap-type: none;
+      overscroll-behavior: none;
+    }
+
+    main {
+      position: relative;
+      height: 100vh;
+      height: 100dvh;
+      overflow: hidden;
+    }
+
+    main section {
+      position: absolute;
+      inset: 0;
+      display: none !important;
+      opacity: 0;
+      transform: translateX(18px);
+      transition: opacity 0.22s ease, transform 0.22s ease;
+    }
+
+    main section.ativa {
+      display: grid !important;
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    .capa-interativa {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+      cursor: pointer;
+    }
+
+    .capa-interativa img {
+      width: 100%;
+      height: auto;
+    }
+
+    .atalho-capa {
+      position: absolute;
+      top: 73.5%;
+      height: 15%;
+      padding: 0;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .atalho-capa:focus-visible {
+      outline: 3px solid #ffcf33;
+      outline-offset: 2px;
+    }
+
+    .atalho-1 { left: 2.4%; width: 10.2%; }
+    .atalho-2 { left: 13.7%; width: 22.6%; }
+    .atalho-3 { left: 37.5%; width: 12%; }
+    .atalho-4 { left: 50.9%; width: 21.2%; }
+    .atalho-5 { left: 73.3%; width: 22.4%; }
+
+    .controles-tela {
+      position: absolute;
+      z-index: 5;
+      left: 50%;
+      bottom: max(12px, env(safe-area-inset-bottom));
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 7px 12px;
+      transform: translateX(-50%);
+      border: 1px solid rgba(255, 255, 255, 0.28);
+      border-radius: 999px;
+      background: rgba(7, 29, 61, 0.88);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.28);
+      backdrop-filter: blur(8px);
+    }
+
+    .controles-tela button {
+      display: grid;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      place-items: center;
+      border: 2px solid #ffcf33;
+      border-radius: 50%;
+      color: #ffcf33;
+      background: #071d3d;
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .controles-tela button:hover,
+    .controles-tela button:focus-visible {
+      color: #071d3d;
+      background: #ffcf33;
+      outline: none;
+    }
+
+    .controles-tela .inicio {
+      font-size: 20px;
+    }
+
+    @media (max-width: 700px) {
+      main section:not(.tela-capa) figure {
+        padding-bottom: 72px;
+      }
+
+      .controles-tela button {
+        width: 40px;
+        height: 40px;
+      }
+    }
+
     @media print {
       body {
         background: white;
@@ -274,8 +449,10 @@
         margin: 0;
       }
 
-      section {
-        display: block;
+      section,
+      section.ativa {
+        position: static;
+        display: block !important;
         width: 100%;
         height: auto;
         min-height: 0;
@@ -318,6 +495,22 @@
   </nav>
 
   <main>
+    <section id="capa" class="tela-capa ativa" aria-label="Capa do material">
+      <figure>
+        <div class="capa-interativa" aria-label="Escolha uma das cinco áreas contábeis">
+          <img
+            src="capa_principais_contas_contabeis.png"
+            alt="Curso de Contabilidade Professor Moreira — Principais Contas Contábeis"
+          >
+          <button class="atalho-capa atalho-1" type="button" data-ir="1" aria-label="Abrir Principais contas do Ativo"></button>
+          <button class="atalho-capa atalho-2" type="button" data-ir="2" aria-label="Abrir Ativo Não Circulante"></button>
+          <button class="atalho-capa atalho-3" type="button" data-ir="3" aria-label="Abrir Passivo"></button>
+          <button class="atalho-capa atalho-4" type="button" data-ir="4" aria-label="Abrir Patrimônio Líquido"></button>
+          <button class="atalho-capa atalho-5" type="button" data-ir="5" aria-label="Abrir Receitas e Despesas"></button>
+        </div>
+      </figure>
+    </section>
+
     <section id="ativo">
       <h2><span class="numero">1</span> Principais contas do Ativo</h2>
       <figure>
@@ -326,6 +519,11 @@
           alt="Principais contas do Ativo Circulante e do Realizável a Longo Prazo"
         >
       </figure>
+      <div class="controles-tela" aria-label="Controles de navegação">
+        <button type="button" data-anterior aria-label="Tela anterior">‹</button>
+        <button class="inicio" type="button" data-inicio aria-label="Voltar para a capa">⌂</button>
+        <button type="button" data-proxima aria-label="Próxima tela">›</button>
+      </div>
     </section>
 
     <section id="ativo-nao-circulante">
@@ -337,6 +535,11 @@
           loading="lazy"
         >
       </figure>
+      <div class="controles-tela" aria-label="Controles de navegação">
+        <button type="button" data-anterior aria-label="Tela anterior">‹</button>
+        <button class="inicio" type="button" data-inicio aria-label="Voltar para a capa">⌂</button>
+        <button type="button" data-proxima aria-label="Próxima tela">›</button>
+      </div>
     </section>
 
     <section id="passivo">
@@ -348,6 +551,11 @@
           loading="lazy"
         >
       </figure>
+      <div class="controles-tela" aria-label="Controles de navegação">
+        <button type="button" data-anterior aria-label="Tela anterior">‹</button>
+        <button class="inicio" type="button" data-inicio aria-label="Voltar para a capa">⌂</button>
+        <button type="button" data-proxima aria-label="Próxima tela">›</button>
+      </div>
     </section>
 
     <section id="patrimonio-liquido">
@@ -359,6 +567,11 @@
           loading="lazy"
         >
       </figure>
+      <div class="controles-tela" aria-label="Controles de navegação">
+        <button type="button" data-anterior aria-label="Tela anterior">‹</button>
+        <button class="inicio" type="button" data-inicio aria-label="Voltar para a capa">⌂</button>
+        <button type="button" data-proxima aria-label="Próxima tela">›</button>
+      </div>
     </section>
 
     <section id="resultado">
@@ -370,6 +583,11 @@
           loading="lazy"
         >
       </figure>
+      <div class="controles-tela" aria-label="Controles de navegação">
+        <button type="button" data-anterior aria-label="Tela anterior">‹</button>
+        <button class="inicio" type="button" data-inicio aria-label="Voltar para a capa">⌂</button>
+        <button type="button" data-proxima aria-label="Próxima tela">›</button>
+      </div>
     </section>
   </main>
 
@@ -379,29 +597,74 @@
 
   <script>
     const telas = [...document.querySelectorAll("main section")];
+    let indiceAtual = 0;
+    let inicioToqueX = 0;
+    let inicioToqueY = 0;
 
-    function telaAtual() {
-      return telas.reduce((maisProxima, tela, indice) => {
-        const distancia = Math.abs(tela.getBoundingClientRect().top);
-        return distancia < maisProxima.distancia
-          ? { indice, distancia }
-          : maisProxima;
-      }, { indice: 0, distancia: Infinity }).indice;
+    function mostrarTela(indice) {
+      indiceAtual = Math.max(0, Math.min(indice, telas.length - 1));
+      telas.forEach((tela, posicao) => {
+        const ativa = posicao === indiceAtual;
+        tela.classList.toggle("ativa", ativa);
+        tela.setAttribute("aria-hidden", String(!ativa));
+      });
     }
 
-    window.addEventListener("keydown", (evento) => {
-      const indice = telaAtual();
+    document.querySelectorAll("[data-ir]").forEach((botao) => {
+      botao.addEventListener("click", (evento) => {
+        evento.stopPropagation();
+        mostrarTela(Number(botao.dataset.ir));
+      });
+    });
 
-      if (["ArrowDown", "PageDown"].includes(evento.key)) {
+    document.querySelector(".capa-interativa").addEventListener("click", (evento) => {
+      if (!evento.target.closest("[data-ir]")) mostrarTela(1);
+    });
+
+    document.querySelectorAll("[data-anterior]").forEach((botao) => {
+      botao.addEventListener("click", () => mostrarTela(indiceAtual - 1));
+    });
+
+    document.querySelectorAll("[data-proxima]").forEach((botao) => {
+      botao.addEventListener("click", () => mostrarTela(indiceAtual + 1));
+    });
+
+    document.querySelectorAll("[data-inicio]").forEach((botao) => {
+      botao.addEventListener("click", () => mostrarTela(0));
+    });
+
+    window.addEventListener("keydown", (evento) => {
+      if (["ArrowRight", "ArrowDown", "PageDown"].includes(evento.key)) {
         evento.preventDefault();
-        telas[Math.min(indice + 1, telas.length - 1)].scrollIntoView({ behavior: "smooth" });
+        mostrarTela(indiceAtual + 1);
       }
 
-      if (["ArrowUp", "PageUp"].includes(evento.key)) {
+      if (["ArrowLeft", "ArrowUp", "PageUp"].includes(evento.key)) {
         evento.preventDefault();
-        telas[Math.max(indice - 1, 0)].scrollIntoView({ behavior: "smooth" });
+        mostrarTela(indiceAtual - 1);
+      }
+
+      if (evento.key === "Home" || evento.key === "Escape") {
+        evento.preventDefault();
+        mostrarTela(0);
       }
     });
+
+    document.addEventListener("touchstart", (evento) => {
+      inicioToqueX = evento.changedTouches[0].screenX;
+      inicioToqueY = evento.changedTouches[0].screenY;
+    }, { passive: true });
+
+    document.addEventListener("touchend", (evento) => {
+      const diferencaX = evento.changedTouches[0].screenX - inicioToqueX;
+      const diferencaY = evento.changedTouches[0].screenY - inicioToqueY;
+      const movimento = Math.abs(diferencaX) > Math.abs(diferencaY) ? diferencaX : diferencaY;
+
+      if (Math.abs(movimento) < 55) return;
+      mostrarTela(movimento < 0 ? indiceAtual + 1 : indiceAtual - 1);
+    }, { passive: true });
+
+    mostrarTela(0);
   </script>
 </body>
 </html>
