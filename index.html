@@ -345,14 +345,111 @@
 
     .capa-interativa {
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       width: 100%;
-      line-height: 0;
-      cursor: pointer;
+      height: 100%;
+      line-height: normal;
+      background: #eef3f7;
     }
 
-    .capa-interativa img {
+    .tela-capa {
+      background: #eef3f7 !important;
+    }
+
+    .capa-topo {
+      width: 100%;
+      aspect-ratio: 824 / 198;
+      overflow: hidden;
+      background: #0b4d80;
+    }
+
+    .capa-topo img {
+      display: block;
       width: 100%;
       height: auto;
+      object-fit: cover;
+      object-position: top;
+    }
+
+    .menu-capa {
+      display: grid;
+      gap: 13px;
+      width: 100%;
+      padding: 22px 18px 25px;
+      background: #eef3f7;
+    }
+
+    .botao-capa {
+      display: grid;
+      grid-template-columns: 44px 1fr 28px;
+      align-items: center;
+      width: 100%;
+      min-height: 66px;
+      padding: 8px 14px;
+      border: 0;
+      border-radius: 17px;
+      color: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 17px;
+      font-weight: 800;
+      text-align: left;
+      cursor: pointer;
+      box-shadow: 0 7px 17px rgba(21, 50, 74, 0.22);
+      transition: transform 0.15s ease, filter 0.15s ease;
+    }
+
+    .botao-capa:hover,
+    .botao-capa:focus-visible {
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+      outline: 3px solid #ffcf33;
+      outline-offset: 2px;
+    }
+
+    .numero-menu {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      border: 2px solid rgba(255, 255, 255, 0.9);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.16);
+      font-size: 17px;
+      font-weight: 900;
+    }
+
+    .seta-menu {
+      justify-self: end;
+      font-size: 30px;
+      font-weight: 900;
+      line-height: 1;
+    }
+
+    .botao-ativo { background: linear-gradient(135deg, #0878c9, #10a2e8); }
+    .botao-nao-circulante { background: linear-gradient(135deg, #6840a7, #8b64cf); }
+    .botao-passivo { background: linear-gradient(135deg, #bd342d, #e3584f); }
+    .botao-pl { background: linear-gradient(135deg, #13764a, #1ca96b); }
+    .botao-resultado { background: linear-gradient(135deg, #c8660b, #ef8c24); }
+
+    @media (max-height: 680px) {
+      .menu-capa {
+        gap: 9px;
+        padding: 14px;
+      }
+
+      .botao-capa {
+        min-height: 53px;
+        border-radius: 14px;
+        font-size: 15px;
+      }
+
+      .numero-menu {
+        width: 31px;
+        height: 31px;
+        font-size: 15px;
+      }
     }
 
     .atalho-capa {
@@ -498,15 +595,30 @@
     <section id="capa" class="tela-capa ativa" aria-label="Capa do material">
       <figure>
         <div class="capa-interativa" aria-label="Escolha uma das cinco áreas contábeis">
-          <img
-            src="capa_principais_contas_contabeis.png"
-            alt="Curso de Contabilidade Professor Moreira — Principais Contas Contábeis"
-          >
-          <button class="atalho-capa atalho-1" type="button" data-ir="1" aria-label="Abrir Principais contas do Ativo"></button>
-          <button class="atalho-capa atalho-2" type="button" data-ir="2" aria-label="Abrir Ativo Não Circulante"></button>
-          <button class="atalho-capa atalho-3" type="button" data-ir="3" aria-label="Abrir Passivo"></button>
-          <button class="atalho-capa atalho-4" type="button" data-ir="4" aria-label="Abrir Patrimônio Líquido"></button>
-          <button class="atalho-capa atalho-5" type="button" data-ir="5" aria-label="Abrir Receitas e Despesas"></button>
+          <div class="capa-topo">
+            <img
+              src="capa_principais_contas_contabeis.png"
+              alt="Curso de Contabilidade Professor Moreira — Principais Contas Contábeis"
+            >
+          </div>
+
+          <div class="menu-capa">
+            <button class="botao-capa botao-ativo" type="button" data-ir="1">
+              <span class="numero-menu">1</span><span>Principais contas do Ativo</span><span class="seta-menu">›</span>
+            </button>
+            <button class="botao-capa botao-nao-circulante" type="button" data-ir="2">
+              <span class="numero-menu">2</span><span>Ativo Não Circulante</span><span class="seta-menu">›</span>
+            </button>
+            <button class="botao-capa botao-passivo" type="button" data-ir="3">
+              <span class="numero-menu">3</span><span>Principais contas do Passivo</span><span class="seta-menu">›</span>
+            </button>
+            <button class="botao-capa botao-pl" type="button" data-ir="4">
+              <span class="numero-menu">4</span><span>Principais contas do Patrimônio Líquido</span><span class="seta-menu">›</span>
+            </button>
+            <button class="botao-capa botao-resultado" type="button" data-ir="5">
+              <span class="numero-menu">5</span><span>Principais contas de Receitas e Despesas</span><span class="seta-menu">›</span>
+            </button>
+          </div>
         </div>
       </figure>
     </section>
@@ -615,10 +727,6 @@
         evento.stopPropagation();
         mostrarTela(Number(botao.dataset.ir));
       });
-    });
-
-    document.querySelector(".capa-interativa").addEventListener("click", (evento) => {
-      if (!evento.target.closest("[data-ir]")) mostrarTela(1);
     });
 
     document.querySelectorAll("[data-anterior]").forEach((botao) => {
