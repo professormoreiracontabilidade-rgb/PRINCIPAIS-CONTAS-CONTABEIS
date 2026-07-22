@@ -474,6 +474,40 @@
     .atalho-4 { left: 50.9%; width: 21.2%; }
     .atalho-5 { left: 73.3%; width: 22.4%; }
 
+    /* A primeira tela contém somente a nova imagem mobile */
+    .tela-capa {
+      background: linear-gradient(160deg, #4D0612, #941024 52%, #D33548) !important;
+    }
+
+    .capa-interativa {
+      position: relative;
+      display: block;
+      width: min(100%, 89.4dvh);
+      height: auto;
+      aspect-ratio: 760 / 850;
+      background: transparent;
+    }
+
+    .capa-interativa > img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      max-height: none;
+      object-fit: contain;
+    }
+
+    .capa-interativa .atalho-capa {
+      left: 6.58%;
+      width: 86.84%;
+      height: 10.12%;
+    }
+
+    .capa-interativa .atalho-1 { top: 33.88%; }
+    .capa-interativa .atalho-2 { top: 45.88%; }
+    .capa-interativa .atalho-3 { top: 57.88%; }
+    .capa-interativa .atalho-4 { top: 69.88%; }
+    .capa-interativa .atalho-5 { top: 81.88%; }
+
     .controles-tela {
       position: absolute;
       z-index: 5;
@@ -595,30 +629,15 @@
     <section id="capa" class="tela-capa ativa" aria-label="Capa do material">
       <figure>
         <div class="capa-interativa" aria-label="Escolha uma das cinco áreas contábeis">
-          <div class="capa-topo">
-            <img
-              src="capa_principais_contas_contabeis.png"
-              alt="Curso de Contabilidade Professor Moreira — Principais Contas Contábeis"
-            >
-          </div>
-
-          <div class="menu-capa">
-            <button class="botao-capa botao-ativo" type="button" data-ir="1">
-              <span class="numero-menu">1</span><span>Principais contas do Ativo</span><span class="seta-menu">›</span>
-            </button>
-            <button class="botao-capa botao-nao-circulante" type="button" data-ir="2">
-              <span class="numero-menu">2</span><span>Ativo Não Circulante</span><span class="seta-menu">›</span>
-            </button>
-            <button class="botao-capa botao-passivo" type="button" data-ir="3">
-              <span class="numero-menu">3</span><span>Principais contas do Passivo</span><span class="seta-menu">›</span>
-            </button>
-            <button class="botao-capa botao-pl" type="button" data-ir="4">
-              <span class="numero-menu">4</span><span>Principais contas do Patrimônio Líquido</span><span class="seta-menu">›</span>
-            </button>
-            <button class="botao-capa botao-resultado" type="button" data-ir="5">
-              <span class="numero-menu">5</span><span>Principais contas de Receitas e Despesas</span><span class="seta-menu">›</span>
-            </button>
-          </div>
+          <img
+            src="capa_mobile_contas_botoes_vermelhos.png"
+            alt="Curso de Contabilidade Professor Moreira — Principais Contas Contábeis"
+          >
+          <button class="atalho-capa atalho-1" type="button" data-ir="1" aria-label="Abrir Ativo"></button>
+          <button class="atalho-capa atalho-2" type="button" data-ir="2" aria-label="Abrir Ativo Não Circulante"></button>
+          <button class="atalho-capa atalho-3" type="button" data-ir="3" aria-label="Abrir Passivo"></button>
+          <button class="atalho-capa atalho-4" type="button" data-ir="4" aria-label="Abrir Patrimônio Líquido"></button>
+          <button class="atalho-capa atalho-5" type="button" data-ir="5" aria-label="Abrir Receitas e Despesas"></button>
         </div>
       </figure>
     </section>
